@@ -1,0 +1,8 @@
+config:
+  url: https://rsslinghun1.xyz/api/v1/client/subscribe?token=193ae0c079a360f04dc78d147cf782ac
+  type: clash
+  subConverter:
+    host: 127.0.0.1
+    port: 25500
+
+logging: debug
