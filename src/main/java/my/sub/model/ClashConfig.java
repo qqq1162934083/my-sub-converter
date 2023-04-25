@@ -2,6 +2,7 @@ package my.sub.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 import java.util.List;
@@ -9,7 +10,12 @@ import java.util.Map;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ClashConfig {
+@JsonPropertyOrder({"port", "socks-port", "redir-port",
+        "mixed-port", "allow-lan", "mode", "log-level",
+        "ipv6", "hosts", "external-controller", "clash-for-android",
+        "profile", "dns", "proxies", "proxy-groups", "rules", "rule-providers"})
+public class ClashConfig extends ExpandoJsonObject {
+
     private Integer port;
 
     @JsonProperty("socks-port")
@@ -46,9 +52,9 @@ public class ClashConfig {
     private List<Object> proxies;
 
     @JsonProperty("proxy-groups")
-    private List<Object> proxyGroups;
+    private List<ProxyGroup> proxyGroups;
 
-    private List<Object> rules;
+    private List<String> rules;
 
     @JsonProperty("rule-providers")
     private List<Object> ruleProviders;

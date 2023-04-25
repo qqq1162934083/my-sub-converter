@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Data
-public class SubConfig {
+public class SubConfig extends ExpandoJsonObject{
     private String url;
     private String type;
     private SubConverterConfig subConverter;
