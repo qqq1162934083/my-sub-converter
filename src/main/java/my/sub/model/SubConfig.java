@@ -19,6 +19,6 @@ public class SubConfig {
     private String type;
     @JsonProperty("header-names")
     private Set<String> headerNames;
-    @JsonProperty("main-select-name")
-    private List<Map<String,String>> mainSelectName;
+    @JsonProperty("convert-values")
+    private List<ConvertValueInfo> ConvertValues;
 }
