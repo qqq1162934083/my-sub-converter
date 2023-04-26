@@ -1,5 +1,6 @@
 package my.sub.controller;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -9,6 +10,7 @@ import com.xiaoleilu.hutool.http.HttpResponse;
 import com.xiaoleilu.hutool.io.FileUtil;
 import com.xiaoleilu.hutool.util.ReflectUtil;
 import lombok.var;
+import my.sub.model.ClashConfig;
 import my.sub.model.EModelConfig;
 import my.sub.model.SubConfig;
 import my.sub.util.JsonNodeUtil;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.naming.NameNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,7 +39,7 @@ public class IndexController {
     private ResourceLoader resourceLoader;
 
     @GetMapping("/")
-    public String index(@RequestHeader Map<String, String> headers, HttpServletResponse httpServletResponse) throws IOException, IllegalAccessException {
+    public String index(@RequestHeader Map<String, String> headers, HttpServletResponse httpServletResponse) throws IOException, IllegalAccessException, NameNotFoundException {
         HttpResponse resp = HttpRequest.get(subConfig.getUrl())
                 .header("User-Agent", subConfig.getType())
                 .execute();
@@ -56,7 +60,9 @@ public class IndexController {
      * @return
      * @throws IOException
      */
-    private String handleBody(String body) throws IOException {
+    private String handleBody(String body) throws IOException, NameNotFoundException {
+
+        body = preprocessBodyString(body);
 
         var jsonMapper = new ObjectMapper(new YAMLFactory());
         jsonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
@@ -70,9 +76,6 @@ public class IndexController {
         var customConfig = JsonNodeUtil.asMap(jsonMapper.readTree(customConfigString), Object.class);
         var modelConfigMap = JsonNodeUtil.asMap(jsonMapper.readTree(modelConfigString), Object.class);
 
-        //预处理配置
-        preprocessConfig(config);
-
         //获取标准化的模式配置
         var modelConfig = getNormalizedModelConfig(customConfig, modelConfigMap);
 
@@ -80,27 +83,42 @@ public class IndexController {
         handleConfig(config, customConfig, modelConfig);
 
         //将处理后的内容转字符串
-        return jsonMapper.writeValueAsString(config);
+        var result = jsonMapper.writeValueAsString(config);
+        var clashConfig = jsonMapper.readValue(result, ClashConfig.class);
+        result = jsonMapper.writeValueAsString(clashConfig);
+
+        return result;
+    }
+
+
+    /**
+     * 对订阅地址响应体进行预处理
+     *
+     * @return
+     */
+    private String preprocessBodyString(String body) {
+        return body.replace(subConfig.getSelectNodeProxyGroupName(), "PROXY");
     }
 
     /**
-     * 对配置进行预处理
+     * 根据位置找到结点
      *
-     * @param config
+     * @param node
+     * @param location
+     * @return
      */
-    private void preprocessConfig(Map<String, Object> config) {
-        //更名main-select 从rules、proxy-groups中替换
-        List<Object> proxyGroupList = JsonNodeUtil.asList(config.get("proxy-groups"), Object.class);
-        for (var proxyGroup : proxyGroupList) {
-            var map = JsonNodeUtil.asMap(proxyGroup, Object.class);
-            if(map.containsKey("name")){
-                var name = map.get("name");
-                if(Objects.equals(subConfig.getMainSelectName(),name)){
-                    map.put("name",subConfig.getRulesName());
-                }
-            }
+    private Object findNodeByLocation(Object node, Queue<String> location) throws NameNotFoundException {
+        Object currNode = node;
+        if (location == null) return currNode;
+
+        while (!location.isEmpty()) {
+            var name = location.poll();
+            if (!JsonNodeUtil.isObjectNode(node))
+                throw new NameNotFoundException("找不到结点");
+            var map = JsonNodeUtil.asMap(node, Object.class);
+            currNode = map.get(name);
         }
-        System.out.println();
+        return currNode;
     }
 
     /**
@@ -110,7 +128,17 @@ public class IndexController {
      * @param customConfig
      * @param modelConfig
      */
-    private void handleConfig(Map<String, Object> config, Map<String, Object> customConfig, Map<String, EModelConfig> modelConfig) {
+    private void handleConfig(Map<String, Object> config, Map<String, Object> customConfig, Map<String, EModelConfig> modelConfig) throws NameNotFoundException {
+
+        //改节点选择为 MAIN_SELECT
+        var proxyGroups = JsonNodeUtil.asList(config.get("proxy-groups"), Object.class)
+                .stream().map(x -> JsonNodeUtil.asMap(x, Object.class)).collect(Collectors.toList());
+        var proxyGroup = proxyGroups.stream()
+                .filter(x -> Objects.equals(x.get("name").toString(), "PROXY") || Objects.equals(x.get("name").toString(), "\"PROXY\"")).findFirst().orElse(null);
+        if (proxyGroup == null)
+            throw new NameNotFoundException("cant find proxy-group named 'PROXY'");
+        proxyGroup.put("name", "MAIN_SELECT");
+        config.put("proxy-groups", proxyGroups);
 
         //按照模式配置进行处理
         for (var field : modelConfig.keySet()) {
@@ -139,7 +167,8 @@ public class IndexController {
                         var newListIterable = (Iterable<Object>) newValue;
                         var newList = newListIterable == null ? new ArrayList<>() : StreamSupport.stream(newListIterable.spliterator(), false).collect(Collectors.toList());
                         if (model == EModelConfig.LIST_POSTADD) {
-                            config.put(field, Stream.concat(oldList.stream(), newList.stream()).collect(Collectors.toList()));
+                            List<Object> result = Stream.concat(oldList.stream(), newList.stream()).collect(Collectors.toList());
+                            config.put(field, result);
                         } else if (model == EModelConfig.LIST_PREADD) {
                             config.put(field, Stream.concat(newList.stream(), oldList.stream()).collect(Collectors.toList()));
                         }

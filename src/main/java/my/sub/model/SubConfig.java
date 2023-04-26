@@ -19,6 +19,6 @@ public class SubConfig {
     private String type;
     @JsonProperty("header-names")
     private Set<String> headerNames;
-    @JsonProperty("convert-values")
-    private List<ConvertValueInfo> ConvertValues;
+    @JsonProperty("select-node-proxy-group-name")
+    private String selectNodeProxyGroupName;
 }
