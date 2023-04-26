@@ -5,8 +5,16 @@ config:
     - Subscription-Userinfo
     - Profile-Web-Page-Url
     - Profile-Update-Interval
-  subConverter:
-    host: 127.0.0.1
-    port: 25500
-
-logging: debug
+  convert-values:
+    - location: proxy-groups.name
+      type: string
+      pattern: xx
+      value: MAIN_SELECT
+    - location: proxy-groups.proxies.name
+      type: string
+      pattern: xx
+      value: MAIN_SELECT
+    - location: rules
+      type: regex
+      pattern: (?<=,)[^\s,](?=[^\S\n]*[,$])
+      value: MAIN_SELECT

@@ -10,12 +10,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Data
-public class SubConfig extends ExpandoJsonObject{
+public class SubConfig {
     private String url;
     private String type;
     @JsonProperty("header-names")
-    private HashSet<String> headerNames;
-    private SubConverterConfig subConverter;
+    private Set<String> headerNames;
+    @JsonProperty("main-select-name")
+    private List<Map<String,String>> mainSelectName;
 }
