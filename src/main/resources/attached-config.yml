@@ -11,8 +11,8 @@ proxy-groups:
   - name: MODE_SELECT
     type: select
     proxies:
-      - RELAY_TO_ISP
       - MAIN_SELECT
+      - RELAY_TO_ISP
       - ISP_SELECT
 
   - name: RELAY_TO_ISP

@@ -1,5 +1,5 @@
 #list-preadd前置添加 list-postadd后置添加 replace替换 remove移除 默认情况都走replaceport: remove
-dns: remove
+#dns: remove
 socks-port: remove
 mixed-port: replace
 proxies: list-postadd

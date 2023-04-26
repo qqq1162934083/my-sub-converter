@@ -10,11 +10,14 @@ import java.util.Map;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"port", "socks-port", "redir-port",
+@JsonPropertyOrder({"bind-address", "port", "socks-port", "redir-port",
         "mixed-port", "allow-lan", "mode", "log-level",
         "ipv6", "hosts", "external-controller", "clash-for-android",
         "profile", "dns", "proxies", "proxy-groups", "rules", "rule-providers"})
 public class ClashConfig extends ExpandoJsonObject {
+
+    @JsonProperty("bind-address")
+    private String bindAddress;
 
     private Integer port;
 
