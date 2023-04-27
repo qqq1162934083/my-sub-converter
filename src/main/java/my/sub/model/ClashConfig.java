@@ -10,10 +10,9 @@ import java.util.Map;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"bind-address", "port", "socks-port", "redir-port",
-        "mixed-port", "allow-lan", "mode", "log-level",
-        "ipv6", "hosts", "external-controller", "clash-for-android",
-        "profile", "dns", "proxies", "proxy-groups", "rules", "rule-providers"})
+@JsonPropertyOrder({"bind-address", "port", "socks-port", "redir-port", "mixed-port", "allow-lan",
+        "mode", "log-level", "ipv6", "hosts", "external-controller", "clash-for-android", "profile",
+        "bypass", "dns", "proxies", "proxy-groups", "rules", "rule-providers"})
 public class ClashConfig extends ExpandoJsonObject {
 
     @JsonProperty("bind-address")
@@ -50,6 +49,7 @@ public class ClashConfig extends ExpandoJsonObject {
 
     private String profile;
 
+    private Object bypass;
     private Object dns;
 
     private List<Object> proxies;

@@ -1,4 +1,40 @@
 mixed-port: 7890
+dns:
+  enable: true
+  ipv6: false
+  default-nameserver:
+    - "223.5.5.5"
+    - "119.29.29.29"
+  enhanced-mode: "fake-ip"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.tcl.com"
+    - "tcl.com"
+    - "*.tclking.com"
+    - "tclking.com"
+    - "*.msftconnecttest.com"
+    - "msftconnecttest.com"
+  use-hosts: true
+  nameserver:
+    - "https://doh.pub/dns-query"
+    - "https://dns.alidns.com/dns-query"
+  fallback:
+    - "https://doh.dns.sb/dns-query"
+    - "https://dns.cloudflare.com/dns-query"
+    - "https://dns.twnic.tw/dns-query"
+    - "tls://8.8.4.4:853"
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - "240.0.0.0/4"
+      - "0.0.0.0/32"
+bypass:
+  - "*.tcl.com"
+  - "tcl.com"
+  - "*.tclking.com"
+  - "tclking.com"
+  - "*.msftconnecttest.com"
+  - "msftconnecttest.com"
 proxies:
   - { name: ISP1, type: socks5, server: 45.134.93.165, port: 58169, username: 8Z1iLjM1j8l49IO, password: 7zJ14Hco23Fcvcj, udp: true }
   - { name: ISP2, type: socks5, server: 45.134.93.165, port: 58169, username: 8Z1iLjM1j8l49IO, password: 7zJ14Hco23Fcvcj, udp: true }
