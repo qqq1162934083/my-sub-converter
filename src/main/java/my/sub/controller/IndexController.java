@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Proxy;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,6 +41,10 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(@RequestHeader Map<String, String> headers, HttpServletResponse httpServletResponse) throws IOException, IllegalAccessException, NameNotFoundException {
+        var now = new Date();
+        var dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSSSSS");
+        var nowTimeString = dateFormat.format(now);
+        System.out.println(nowTimeString + " : " + "request a subscription information response");
         HttpResponse resp = HttpRequest.get(subConfig.getUrl())
                 .header("User-Agent", subConfig.getType())
                 .execute();
