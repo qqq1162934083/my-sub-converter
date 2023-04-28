@@ -93,6 +93,7 @@ rules:
   #tiktok
   - DOMAIN-SUFFIX,tiktokv.com,PROXY
   - DOMAIN-SUFFIX,tiktokcdn.com,PROXY
+  - DOMAIN-SUFFIX,tiktokcdn-us.com,PROXY
 
   #bilibili
   #- DOMAIN-SUFFIX,bilibili.com,PROXY
