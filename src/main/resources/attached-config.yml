@@ -63,6 +63,9 @@ proxy-groups:
       - ISP1
       - ISP2
 rules:
+  #tandem
+  - DOMAIN-SUFFIX,tandem.net,PROXY
+
   #ipinfo.io测ip
   #- DOMAIN-SUFFIX,ipinfo.io,PROXY
 
