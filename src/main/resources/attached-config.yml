@@ -73,9 +73,11 @@ rules:
   #ipinfo.io测ip
   #- DOMAIN-SUFFIX,ipinfo.io,PROXY
 
+  #必须开通的广告服务
   #google ad services
   - DOMAIN-SUFFIX,googleadservices.com,PROXY
   - DOMAIN-SUFFIX,ad.doubleclick.net,PROXY
+  - DOMAIN-SUFFIX,pixel.everesttech.net,PROXY
 
   #shandian
   - DOMAIN-SUFFIX,shandianpro.com,PROXY
