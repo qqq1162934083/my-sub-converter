@@ -39,7 +39,7 @@ public class IndexController {
     @Resource
     private ResourceLoader resourceLoader;
 
-    @GetMapping("/")
+    @GetMapping("/sub")
     public String index(@RequestHeader Map<String, String> headers, HttpServletResponse httpServletResponse) throws IOException, IllegalAccessException, NameNotFoundException {
         var now = new Date();
         var dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSSSSS");
@@ -55,7 +55,10 @@ public class IndexController {
                 httpServletResponse.setHeader(headerName, resp.header(headerName));
             }
         }
-        return handleBody(body);
+        var result = handleBody(body);
+
+        System.out.println(nowTimeString + " : " + "request a subscription information response successfully");
+        return result;
     }
 
     /**
