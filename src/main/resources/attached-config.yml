@@ -63,6 +63,9 @@ proxy-groups:
       - ISP1
       - ISP2
 rules:
+  #tandem
+  - DOMAIN-SUFFIX,tandem.net,PROXY
+
   #ipinfo.io测ip
   #- DOMAIN-SUFFIX,ipinfo.io,PROXY
 
@@ -90,34 +93,39 @@ rules:
   - DOMAIN-SUFFIX,chat.openai.com,PROXY
   - DOMAIN-SUFFIX,openai.com,PROXY
 
+  #tiktok
+  - DOMAIN-SUFFIX,tiktokv.com,PROXY
+  - DOMAIN-SUFFIX,tiktokcdn.com,PROXY
+  - DOMAIN-SUFFIX,tiktokcdn-us.com,PROXY
+
   #bilibili
-  - DOMAIN-SUFFIX,bilibili.com,PROXY
-  - DOMAIN-SUFFIX,biliapi.net,PROXY
-  - DOMAIN-SUFFIX,akamaized.net,PROXY
-  - DOMAIN-SUFFIX,bilivideo.com,PROXY
-  - DOMAIN-SUFFIX,www.bilibili.com,PROXY
-  - DOMAIN-SUFFIX,s1.hdslb.com,PROXY
-  - DOMAIN-SUFFIX,static.hdslb.com,PROXY
-  - DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net,PROXY
-  - DOMAIN-SUFFIX,data.bilibili.com,PROXY
-  - DOMAIN-SUFFIX,i0.hdslb.com,PROXY
-  - DOMAIN-SUFFIX,api.bilibili.com,PROXY
-  - DOMAIN-SUFFIX,api.live.bilibili.com,PROXY
-  - DOMAIN-SUFFIX,i2.hdslb.com,PROXY
-  - DOMAIN-SUFFIX,i1.hdslb.com,PROXY
-  - DOMAIN-SUFFIX,cm.bilibili.com,PROXY
-  - DOMAIN-SUFFIX,passport.bilibili.com,PROXY
-  - DOMAIN-SUFFIX,api.geetest.com,PROXY
-  - DOMAIN-SUFFIX,static.geetest.com,PROXY
-  - DOMAIN-SUFFIX,passport.bigfun.cn,PROXY
-  - DOMAIN-SUFFIX,passport.biligame.com,PROXY
-  - DOMAIN-SUFFIX,passport.bilicomic.com,PROXY
-  - DOMAIN-SUFFIX,passport.bigfunapp.cn,PROXY
-  - DOMAIN-SUFFIX,passport.bilibili.cn,PROXY
-  - DOMAIN-SUFFIX,passport.bilicomics.com,PROXY
-  - DOMAIN-SUFFIX,api.vc.bilibili.com,PROXY
-  - DOMAIN-SUFFIX,message.bilibili.com,PROXY
-  - DOMAIN-SUFFIX,backup.hdslb.com,PROXY
+  #- DOMAIN-SUFFIX,bilibili.com,PROXY
+  #- DOMAIN-SUFFIX,biliapi.net,PROXY
+  #- DOMAIN-SUFFIX,akamaized.net,PROXY
+  #- DOMAIN-SUFFIX,bilivideo.com,PROXY
+  #- DOMAIN-SUFFIX,www.bilibili.com,PROXY
+  #- DOMAIN-SUFFIX,s1.hdslb.com,PROXY
+  #- DOMAIN-SUFFIX,static.hdslb.com,PROXY
+  #- DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net,PROXY
+  #- DOMAIN-SUFFIX,data.bilibili.com,PROXY
+  #- DOMAIN-SUFFIX,i0.hdslb.com,PROXY
+  #- DOMAIN-SUFFIX,api.bilibili.com,PROXY
+  #- DOMAIN-SUFFIX,api.live.bilibili.com,PROXY
+  #- DOMAIN-SUFFIX,i2.hdslb.com,PROXY
+  #- DOMAIN-SUFFIX,i1.hdslb.com,PROXY
+  #- DOMAIN-SUFFIX,cm.bilibili.com,PROXY
+  #- DOMAIN-SUFFIX,passport.bilibili.com,PROXY
+  #- DOMAIN-SUFFIX,api.geetest.com,PROXY
+  #- DOMAIN-SUFFIX,static.geetest.com,PROXY
+  #- DOMAIN-SUFFIX,passport.bigfun.cn,PROXY
+  #- DOMAIN-SUFFIX,passport.biligame.com,PROXY
+  #- DOMAIN-SUFFIX,passport.bilicomic.com,PROXY
+  #- DOMAIN-SUFFIX,passport.bigfunapp.cn,PROXY
+  #- DOMAIN-SUFFIX,passport.bilibili.cn,PROXY
+  #- DOMAIN-SUFFIX,passport.bilicomics.com,PROXY
+  #- DOMAIN-SUFFIX,api.vc.bilibili.com,PROXY
+  #- DOMAIN-SUFFIX,message.bilibili.com,PROXY
+  #- DOMAIN-SUFFIX,backup.hdslb.com,PROXY
 
   #tcl
   - DOMAIN-SUFFIX,tcl.com,DIRECT
