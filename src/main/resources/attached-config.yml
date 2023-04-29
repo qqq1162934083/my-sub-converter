@@ -66,6 +66,10 @@ rules:
   #tandem
   - DOMAIN-SUFFIX,tandem.net,PROXY
 
+  #microsoft
+  - DOMAIN-SUFFIX,microsoft.com.PROXY
+  - DOMAIN-SUFFIX,microsoftonline.com.PROXY
+
   #ipinfo.io测ip
   #- DOMAIN-SUFFIX,ipinfo.io,PROXY
 
