@@ -36,7 +36,9 @@ bypass:
   - "*.msftconnecttest.com"
   - "msftconnecttest.com"
 proxies:
+  # 45.134.93.165
   - { name: ISP1, type: socks5, server: 45.134.93.165, port: 58169, username: 8Z1iLjM1j8l49IO, password: 7zJ14Hco23Fcvcj, udp: true }
+  # 45.134.93.165
   - { name: ISP2, type: socks5, server: 45.134.93.165, port: 58169, username: 8Z1iLjM1j8l49IO, password: 7zJ14Hco23Fcvcj, udp: true }
 proxy-groups:
   - name: MY_PROXY
