@@ -39,6 +39,8 @@ public class IndexController {
     @Resource
     private ResourceLoader resourceLoader;
 
+    private final String defaultProxyName = "MY_PROXY";
+
     @GetMapping("/sub")
     public String index(@RequestHeader Map<String, String> headers, HttpServletResponse httpServletResponse) throws IOException, IllegalAccessException, NameNotFoundException {
         var now = new Date();
@@ -55,10 +57,7 @@ public class IndexController {
                 httpServletResponse.setHeader(headerName, resp.header(headerName));
             }
         }
-        var result = handleBody(body);
-
-        System.out.println(nowTimeString + " : " + "request a subscription information response successfully");
-        return result;
+        return handleBody(body);
     }
 
     /**
@@ -105,7 +104,7 @@ public class IndexController {
      * @return
      */
     private String preprocessBodyString(String body) {
-        return body.replace(subConfig.getSelectNodeProxyGroupName(), "PROXY");
+        return body.replace(subConfig.getSelectNodeProxyGroupName(), defaultProxyName);
     }
 
     /**
@@ -142,9 +141,9 @@ public class IndexController {
         var proxyGroups = JsonNodeUtil.asList(config.get("proxy-groups"), Object.class)
                 .stream().map(x -> JsonNodeUtil.asMap(x, Object.class)).collect(Collectors.toList());
         var proxyGroup = proxyGroups.stream()
-                .filter(x -> Objects.equals(x.get("name").toString(), "PROXY") || Objects.equals(x.get("name").toString(), "\"PROXY\"")).findFirst().orElse(null);
+                .filter(x -> Objects.equals(x.get("name").toString(), defaultProxyName) || Objects.equals(x.get("name").toString(), "\"" + defaultProxyName + "\"")).findFirst().orElse(null);
         if (proxyGroup == null)
-            throw new NameNotFoundException("cant find proxy-group named 'PROXY'");
+            throw new NameNotFoundException("cant find proxy-group named '" + defaultProxyName + "'");
         proxyGroup.put("name", "MAIN_SELECT");
         config.put("proxy-groups", proxyGroups);
 

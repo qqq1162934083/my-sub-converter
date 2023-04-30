@@ -39,7 +39,7 @@ proxies:
   - { name: ISP1, type: socks5, server: 45.134.93.165, port: 58169, username: 8Z1iLjM1j8l49IO, password: 7zJ14Hco23Fcvcj, udp: true }
   - { name: ISP2, type: socks5, server: 45.134.93.165, port: 58169, username: 8Z1iLjM1j8l49IO, password: 7zJ14Hco23Fcvcj, udp: true }
 proxy-groups:
-  - name: PROXY
+  - name: MY_PROXY
     type: select
     proxies:
       - MODE_SELECT
@@ -64,75 +64,75 @@ proxy-groups:
       - ISP2
 rules:
   #tandem
-  - DOMAIN-SUFFIX,tandem.net,PROXY
+  - DOMAIN-SUFFIX,tandem.net,MY_PROXY
 
   #microsoft
-  - DOMAIN-SUFFIX,microsoft.com,PROXY
-  - DOMAIN-SUFFIX,microsoftonline.com,PROXY
+  - DOMAIN-SUFFIX,microsoft.com,MY_PROXY
+  - DOMAIN-SUFFIX,microsoftonline.com,MY_PROXY
 
   #ipinfo.io测ip
-  #- DOMAIN-SUFFIX,ipinfo.io,PROXY
+  #- DOMAIN-SUFFIX,ipinfo.io,MY_PROXY
 
   #必须开通的广告服务
   #google ad services
-  - DOMAIN-SUFFIX,googleadservices.com,PROXY
-  - DOMAIN-SUFFIX,ad.doubleclick.net,PROXY
-  - DOMAIN-SUFFIX,pixel.everesttech.net,PROXY
+  - DOMAIN-SUFFIX,googleadservices.com,MY_PROXY
+  - DOMAIN-SUFFIX,ad.doubleclick.net,MY_PROXY
+  - DOMAIN-SUFFIX,pixel.everesttech.net,MY_PROXY
 
   #shandian
-  - DOMAIN-SUFFIX,shandianpro.com,PROXY
+  - DOMAIN-SUFFIX,shandianpro.com,MY_PROXY
 
   #bing
-  - DOMAIN-SUFFIX,bing.com,PROXY
+  - DOMAIN-SUFFIX,bing.com,MY_PROXY
 
   #oracle
-  - DOMAIN-SUFFIX,oracle.com,PROXY
+  - DOMAIN-SUFFIX,oracle.com,MY_PROXY
 
   #postman
-  - DOMAIN-SUFFIX,postman.com,PROXY
-  - DOMAIN-SUFFIX,getpostman.com,PROXY
+  - DOMAIN-SUFFIX,postman.com,MY_PROXY
+  - DOMAIN-SUFFIX,getpostman.com,MY_PROXY
 
   #leetcode
-  - DOMAIN-SUFFIX,leetcode.com,PROXY
-  - DOMAIN-SUFFIX,leetcode.cn,PROXY
+  - DOMAIN-SUFFIX,leetcode.com,MY_PROXY
+  - DOMAIN-SUFFIX,leetcode.cn,MY_PROXY
 
   #chatgpt
-  - DOMAIN-SUFFIX,chat.openai.com,PROXY
-  - DOMAIN-SUFFIX,openai.com,PROXY
+  - DOMAIN-SUFFIX,chat.openai.com,MY_PROXY
+  - DOMAIN-SUFFIX,openai.com,MY_PROXY
 
   #tiktok
-  - DOMAIN-SUFFIX,tiktokv.com,PROXY
-  - DOMAIN-SUFFIX,tiktokcdn.com,PROXY
-  - DOMAIN-SUFFIX,tiktokcdn-us.com,PROXY
+  - DOMAIN-SUFFIX,tiktokv.com,MY_PROXY
+  - DOMAIN-SUFFIX,tiktokcdn.com,MY_PROXY
+  - DOMAIN-SUFFIX,tiktokcdn-us.com,MY_PROXY
 
   #bilibili
-  #- DOMAIN-SUFFIX,bilibili.com,PROXY
-  #- DOMAIN-SUFFIX,biliapi.net,PROXY
-  #- DOMAIN-SUFFIX,akamaized.net,PROXY
-  #- DOMAIN-SUFFIX,bilivideo.com,PROXY
-  #- DOMAIN-SUFFIX,www.bilibili.com,PROXY
-  #- DOMAIN-SUFFIX,s1.hdslb.com,PROXY
-  #- DOMAIN-SUFFIX,static.hdslb.com,PROXY
-  #- DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net,PROXY
-  #- DOMAIN-SUFFIX,data.bilibili.com,PROXY
-  #- DOMAIN-SUFFIX,i0.hdslb.com,PROXY
-  #- DOMAIN-SUFFIX,api.bilibili.com,PROXY
-  #- DOMAIN-SUFFIX,api.live.bilibili.com,PROXY
-  #- DOMAIN-SUFFIX,i2.hdslb.com,PROXY
-  #- DOMAIN-SUFFIX,i1.hdslb.com,PROXY
-  #- DOMAIN-SUFFIX,cm.bilibili.com,PROXY
-  #- DOMAIN-SUFFIX,passport.bilibili.com,PROXY
-  #- DOMAIN-SUFFIX,api.geetest.com,PROXY
-  #- DOMAIN-SUFFIX,static.geetest.com,PROXY
-  #- DOMAIN-SUFFIX,passport.bigfun.cn,PROXY
-  #- DOMAIN-SUFFIX,passport.biligame.com,PROXY
-  #- DOMAIN-SUFFIX,passport.bilicomic.com,PROXY
-  #- DOMAIN-SUFFIX,passport.bigfunapp.cn,PROXY
-  #- DOMAIN-SUFFIX,passport.bilibili.cn,PROXY
-  #- DOMAIN-SUFFIX,passport.bilicomics.com,PROXY
-  #- DOMAIN-SUFFIX,api.vc.bilibili.com,PROXY
-  #- DOMAIN-SUFFIX,message.bilibili.com,PROXY
-  #- DOMAIN-SUFFIX,backup.hdslb.com,PROXY
+  #- DOMAIN-SUFFIX,bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,biliapi.net,MY_PROXY
+  #- DOMAIN-SUFFIX,akamaized.net,MY_PROXY
+  #- DOMAIN-SUFFIX,bilivideo.com,MY_PROXY
+  #- DOMAIN-SUFFIX,www.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,s1.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,static.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net,MY_PROXY
+  #- DOMAIN-SUFFIX,data.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,i0.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,api.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,api.live.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,i2.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,i1.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,cm.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,api.geetest.com,MY_PROXY
+  #- DOMAIN-SUFFIX,static.geetest.com,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bigfun.cn,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.biligame.com,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bilicomic.com,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bigfunapp.cn,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bilibili.cn,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bilicomics.com,MY_PROXY
+  #- DOMAIN-SUFFIX,api.vc.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,message.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,backup.hdslb.com,MY_PROXY
 
   #tcl
   - DOMAIN-SUFFIX,tcl.com,DIRECT
@@ -144,10 +144,10 @@ rules:
   - DOMAIN,yacd.haishan.me,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,reject,REJECT
-  - RULE-SET,tld-not-cn,PROXY
-  - RULE-SET,gfw,PROXY
-  - RULE-SET,greatfire,PROXY
-  - RULE-SET,telegramcidr,PROXY
+  - RULE-SET,tld-not-cn,MY_PROXY
+  - RULE-SET,gfw,MY_PROXY
+  - RULE-SET,greatfire,MY_PROXY
+  - RULE-SET,telegramcidr,MY_PROXY
   - MATCH,DIRECT
 rule-providers:
   reject:
