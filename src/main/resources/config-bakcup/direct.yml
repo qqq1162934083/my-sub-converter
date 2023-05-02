@@ -146,18 +146,11 @@ rules:
   - DOMAIN,yacd.haishan.me,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,reject,REJECT
-  - RULE-SET,icloud,DIRECT
-  - RULE-SET,apple,DIRECT
-  - RULE-SET,google,DIRECT
-  - RULE-SET,proxy,MY_PROXY
-  - RULE-SET,direct,DIRECT
-  - RULE-SET,lancidr,DIRECT
-  - RULE-SET,cncidr,DIRECT
+  - RULE-SET,tld-not-cn,MY_PROXY
+  - RULE-SET,gfw,MY_PROXY
+  - RULE-SET,greatfire,MY_PROXY
   - RULE-SET,telegramcidr,MY_PROXY
-  - GEOIP,LAN,DIRECT,no-resolve
-  - GEOIP,CN,DIRECT,no-resolve
-  - MATCH,MY_PROXY
-
+  - MATCH,DIRECT
 rule-providers:
   reject:
     type: http

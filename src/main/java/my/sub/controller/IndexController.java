@@ -46,7 +46,8 @@ public class IndexController {
         var now = new Date();
         var dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSSSSS");
         var nowTimeString = dateFormat.format(now);
-        System.out.println(nowTimeString + " : " + "request a subscription information response");
+        var uuid = UUID.randomUUID();
+        System.out.println(nowTimeString + " : [" + uuid + "] - request a subscription information response");
         HttpResponse resp = HttpRequest.get(subConfig.getUrl())
                 .header("User-Agent", subConfig.getType())
                 .execute();
@@ -57,7 +58,9 @@ public class IndexController {
                 httpServletResponse.setHeader(headerName, resp.header(headerName));
             }
         }
-        return handleBody(body);
+        var result = handleBody(body);
+        System.out.println(nowTimeString + " : [" + uuid + "] - response successfully");
+        return result;
     }
 
     /**
