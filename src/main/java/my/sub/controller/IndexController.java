@@ -145,9 +145,12 @@ public class IndexController {
                 .stream().map(x -> JsonNodeUtil.asMap(x, Object.class)).collect(Collectors.toList());
         var proxyGroup = proxyGroups.stream()
                 .filter(x -> Objects.equals(x.get("name").toString(), defaultProxyName) || Objects.equals(x.get("name").toString(), "\"" + defaultProxyName + "\"")).findFirst().orElse(null);
+        var proxies = JsonNodeUtil.asList(proxyGroup.get("proxies"), Object.class);
+        proxies.add("aws");
         if (proxyGroup == null)
             throw new NameNotFoundException("cant find proxy-group named '" + defaultProxyName + "'");
         proxyGroup.put("name", "MAIN_SELECT");
+        proxyGroup.put("proxies", proxies);
         config.put("proxy-groups", proxyGroups);
 
         //按照模式配置进行处理
