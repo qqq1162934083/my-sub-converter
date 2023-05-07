@@ -37,7 +37,7 @@ bypass:
   - "msftconnecttest.com"
 proxies:
   # aws
-  - { name: aws, server: tychodisk.top, port: 443, type: vmess, uuid: a9a6cd6d-dbdb-4b6b-8f0e-d3d81766c170, alterId: 0, cipher: zero, tls: true, skip-cert-verify: true, network: ws, ws-opts: { path: /a9a6cd6d-dbdb-4b6b-8f0e-d3d81766c170 }, udp: true}
+  - { name: aws, server: 13.35.69.104, port: 443, type: vmess, uuid: a9a6cd6d-dbdb-4b6b-8f0e-d3d81766c170, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, network: ws, ws-opts: { path: /a9a6cd6d-dbdb-4b6b-8f0e-d3d81766c170, headers: { Host: d1senemq0jpzlo.cloudfront.net } }, udp: true }
   # 45.134.93.165
   - { name: ISP1, type: socks5, server: 45.134.93.165, port: 58169, username: 8Z1iLjM1j8l49IO, password: 7zJ14Hco23Fcvcj, udp: true }
   # 45.134.93.165
@@ -121,33 +121,33 @@ rules:
   - DOMAIN-SUFFIX,tiktokcdn-us.com,MY_PROXY
 
   #bilibili
-  - DOMAIN-SUFFIX,bilibili.com,MY_PROXY
-  - DOMAIN-SUFFIX,biliapi.net,MY_PROXY
-  - DOMAIN-SUFFIX,akamaized.net,MY_PROXY
-  - DOMAIN-SUFFIX,bilivideo.com,MY_PROXY
-  - DOMAIN-SUFFIX,www.bilibili.com,MY_PROXY
-  - DOMAIN-SUFFIX,s1.hdslb.com,MY_PROXY
-  - DOMAIN-SUFFIX,static.hdslb.com,MY_PROXY
-  - DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net,MY_PROXY
-  - DOMAIN-SUFFIX,data.bilibili.com,MY_PROXY
-  - DOMAIN-SUFFIX,i0.hdslb.com,MY_PROXY
-  - DOMAIN-SUFFIX,api.bilibili.com,MY_PROXY
-  - DOMAIN-SUFFIX,api.live.bilibili.com,MY_PROXY
-  - DOMAIN-SUFFIX,i2.hdslb.com,MY_PROXY
-  - DOMAIN-SUFFIX,i1.hdslb.com,MY_PROXY
-  - DOMAIN-SUFFIX,cm.bilibili.com,MY_PROXY
-  - DOMAIN-SUFFIX,passport.bilibili.com,MY_PROXY
-  - DOMAIN-SUFFIX,api.geetest.com,MY_PROXY
-  - DOMAIN-SUFFIX,static.geetest.com,MY_PROXY
-  - DOMAIN-SUFFIX,passport.bigfun.cn,MY_PROXY
-  - DOMAIN-SUFFIX,passport.biligame.com,MY_PROXY
-  - DOMAIN-SUFFIX,passport.bilicomic.com,MY_PROXY
-  - DOMAIN-SUFFIX,passport.bigfunapp.cn,MY_PROXY
-  - DOMAIN-SUFFIX,passport.bilibili.cn,MY_PROXY
-  - DOMAIN-SUFFIX,passport.bilicomics.com,MY_PROXY
-  - DOMAIN-SUFFIX,api.vc.bilibili.com,MY_PROXY
-  - DOMAIN-SUFFIX,message.bilibili.com,MY_PROXY
-  - DOMAIN-SUFFIX,backup.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,biliapi.net,MY_PROXY
+  #- DOMAIN-SUFFIX,akamaized.net,MY_PROXY
+  #- DOMAIN-SUFFIX,bilivideo.com,MY_PROXY
+  #- DOMAIN-SUFFIX,www.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,s1.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,static.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net,MY_PROXY
+  #- DOMAIN-SUFFIX,data.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,i0.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,api.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,api.live.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,i2.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,i1.hdslb.com,MY_PROXY
+  #- DOMAIN-SUFFIX,cm.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,api.geetest.com,MY_PROXY
+  #- DOMAIN-SUFFIX,static.geetest.com,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bigfun.cn,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.biligame.com,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bilicomic.com,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bigfunapp.cn,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bilibili.cn,MY_PROXY
+  #- DOMAIN-SUFFIX,passport.bilicomics.com,MY_PROXY
+  #- DOMAIN-SUFFIX,api.vc.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,message.bilibili.com,MY_PROXY
+  #- DOMAIN-SUFFIX,backup.hdslb.com,MY_PROXY
 
   #tcl
   - DOMAIN-SUFFIX,tcl.com,DIRECT
