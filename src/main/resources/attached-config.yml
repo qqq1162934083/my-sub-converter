@@ -67,6 +67,9 @@ proxy-groups:
       - ISP1
       - ISP2
 rules:
+  #private custom
+  - DOMAIN-SUFFIX,local.cn,DIRECT
+
   #csdn.net
   - DOMAIN-SUFFIX,csdn.net,MY_PROXY
 
@@ -85,10 +88,10 @@ rules:
   - DOMAIN-SUFFIX,microsoft.com,MY_PROXY
   - DOMAIN-SUFFIX,microsoftonline.com,MY_PROXY
 
-  #ipinfo.io测ip
+  #ipinfo.io query ip
   #- DOMAIN-SUFFIX,ipinfo.io,MY_PROXY
 
-  #必须开通的广告服务
+  #must advertising services
   #google ad services
   - DOMAIN-SUFFIX,googleadservices.com,MY_PROXY
   - DOMAIN-SUFFIX,ad.doubleclick.net,MY_PROXY
@@ -121,33 +124,33 @@ rules:
   - DOMAIN-SUFFIX,tiktokcdn-us.com,MY_PROXY
 
   #bilibili
-  #- DOMAIN-SUFFIX,bilibili.com,MY_PROXY
-  #- DOMAIN-SUFFIX,biliapi.net,MY_PROXY
-  #- DOMAIN-SUFFIX,akamaized.net,MY_PROXY
-  #- DOMAIN-SUFFIX,bilivideo.com,MY_PROXY
-  #- DOMAIN-SUFFIX,www.bilibili.com,MY_PROXY
-  #- DOMAIN-SUFFIX,s1.hdslb.com,MY_PROXY
-  #- DOMAIN-SUFFIX,static.hdslb.com,MY_PROXY
-  #- DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net,MY_PROXY
-  #- DOMAIN-SUFFIX,data.bilibili.com,MY_PROXY
-  #- DOMAIN-SUFFIX,i0.hdslb.com,MY_PROXY
-  #- DOMAIN-SUFFIX,api.bilibili.com,MY_PROXY
-  #- DOMAIN-SUFFIX,api.live.bilibili.com,MY_PROXY
-  #- DOMAIN-SUFFIX,i2.hdslb.com,MY_PROXY
-  #- DOMAIN-SUFFIX,i1.hdslb.com,MY_PROXY
-  #- DOMAIN-SUFFIX,cm.bilibili.com,MY_PROXY
-  #- DOMAIN-SUFFIX,passport.bilibili.com,MY_PROXY
-  #- DOMAIN-SUFFIX,api.geetest.com,MY_PROXY
-  #- DOMAIN-SUFFIX,static.geetest.com,MY_PROXY
-  #- DOMAIN-SUFFIX,passport.bigfun.cn,MY_PROXY
-  #- DOMAIN-SUFFIX,passport.biligame.com,MY_PROXY
-  #- DOMAIN-SUFFIX,passport.bilicomic.com,MY_PROXY
-  #- DOMAIN-SUFFIX,passport.bigfunapp.cn,MY_PROXY
-  #- DOMAIN-SUFFIX,passport.bilibili.cn,MY_PROXY
-  #- DOMAIN-SUFFIX,passport.bilicomics.com,MY_PROXY
-  #- DOMAIN-SUFFIX,api.vc.bilibili.com,MY_PROXY
-  #- DOMAIN-SUFFIX,message.bilibili.com,MY_PROXY
-  #- DOMAIN-SUFFIX,backup.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,biliapi.net,MY_PROXY
+  - DOMAIN-SUFFIX,akamaized.net,MY_PROXY
+  - DOMAIN-SUFFIX,bilivideo.com,MY_PROXY
+  - DOMAIN-SUFFIX,www.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,s1.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,static.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net,MY_PROXY
+  - DOMAIN-SUFFIX,data.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,i0.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,api.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,api.live.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,i2.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,i1.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,cm.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,api.geetest.com,MY_PROXY
+  - DOMAIN-SUFFIX,static.geetest.com,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bigfun.cn,MY_PROXY
+  - DOMAIN-SUFFIX,passport.biligame.com,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bilicomic.com,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bigfunapp.cn,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bilibili.cn,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bilicomics.com,MY_PROXY
+  - DOMAIN-SUFFIX,api.vc.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,message.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,backup.hdslb.com,MY_PROXY
 
   #tcl
   - DOMAIN-SUFFIX,tcl.com,DIRECT
@@ -183,7 +186,6 @@ rules:
   - RULE-SET,greatfire,MY_PROXY
   - RULE-SET,telegramcidr,MY_PROXY
   - MATCH,DIRECT
-
 rule-providers:
   reject:
     type: http
