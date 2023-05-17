@@ -1,6 +1,9 @@
 package my.sub.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xiaoleilu.hutool.json.JSONUtil;
+import lombok.SneakyThrows;
 import lombok.var;
 
 import java.lang.reflect.Field;
@@ -57,14 +60,11 @@ public final class YamlUtil {
     }
 
     private static boolean isListModel(Type type) {
-        var clazz = (Class) null;
+        return List.class.equals(getClassFromType(type));
+    }
 
-        if (type instanceof ParameterizedType) {
-            clazz = (Class) ((ParameterizedType) type).getRawType();
-        } else {
-            clazz = (Class) type;
-        }
-        return List.class.equals(clazz);
+    private static boolean isMapModel(Type type) {
+        return Map.class.equals(getClassFromType(type));
     }
 
     private static boolean isSimpleModel(Type type) {
@@ -94,16 +94,29 @@ public final class YamlUtil {
 
 
     private static <T> T bindModel(Object map, Type type) throws InstantiationException, IllegalAccessException, NoSuchFieldException {
-        return bindModel(map, type, "");
+        return bindModel(map, type, "$root");
     }
 
+    @SneakyThrows
     private static <T> T bindModel(Object node, Type type, String bindKey) throws InstantiationException, IllegalAccessException, NoSuchFieldException {
+        System.out.println(bindKey);
+        var result = (T) null;
         if (isSimpleModel(type)) {
-            return bindSimpleModel(node, type, bindKey);
-        } else if (isListModel(type)) {
-            return bindListModel(node, type, bindKey);
+            result = bindSimpleModel(node, type, bindKey);
         } else {
-            return bindComplexModel(node, type, bindKey);
+            result = bindComplexModel(node, type, bindKey);
+        }
+        System.out.println(bindKey + " : \r\n" + new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(result));
+        return result;
+    }
+
+    private static <T> T bindComplexModel(Object node, Type type, String bindKey) throws NoSuchFieldException, InstantiationException, IllegalAccessException {
+        if (isListModel(type)) {
+            return bindListModel(node, type, bindKey);
+        } else if (isMapModel(type)) {
+            return bindMapModel(node, type, bindKey);
+        } else {
+            return bindBeanModel(node, type, bindKey);
         }
     }
 
@@ -114,82 +127,33 @@ public final class YamlUtil {
         var list = (List) listModel;
         for (var i = 0; i < listNodeValue.size(); i++) {
             var node = listNodeValue.get(i);
-            //var itemType = Object.class;
             var itemType = ((ParameterizedType) type).getActualTypeArguments()[0];
             list.add(bindModel(node, itemType, bindKey + "[" + i + "]"));
         }
         return (T) list;
     }
 
-    private static <T> T bindComplexModel(Object node, Type type, String bindKey) throws NoSuchFieldException, InstantiationException, IllegalAccessException {
+    private static <T> T bindMapModel(Object node, Type type, String bindKey) throws InstantiationException, IllegalAccessException, NoSuchFieldException {
+        var map = (Map<String, Object>) node;
+        var model = newInstance(type);
+        var mapModel = (Map) model;
+        var mapKeys = map.keySet().toArray();
+        for (var i = 0; i < mapKeys.length; i++) {
+            var key = mapKeys[i];
+            var value = map.get(key);
+            var args = ((ParameterizedType) type).getActualTypeArguments();
+            var newMapKey = bindModel(key, args[0], bindKey + "$Map$[" + i + "]$Key");
+            var newMapValue = bindModel(value, args[1], bindKey + "$Map$[" + i + "]$Value");
+            mapModel.put(newMapKey, newMapValue);
+        }
+        return (T) model;
+    }
+
+    private static <T> T bindBeanModel(Object node, Type type, String bindKey) throws NoSuchFieldException, InstantiationException, IllegalAccessException {
         var map = (Map<String, Object>) node;
         var model = newInstance(type);
         bindProperties(map, type, model, bindKey);
         return (T) model;
-    }
-
-    private static void bindProperties(Map<String, Object> map, Type type, Object model, String bindKey) throws NoSuchFieldException, InstantiationException, IllegalAccessException {
-        for (var key : map.keySet()) {
-            var fieldName = parseFieldName(key);
-            var field = (Field) null;
-            try {
-                field = getField(type, fieldName);
-            } catch (NoSuchFieldException e) {
-                continue;
-            }
-            field.setAccessible(true);
-            var fieldType = field.getGenericType();
-            field.set(model, bindModel(map.get(key), fieldType, key));
-        }
-    }
-
-    private static String parseFieldName(String key) {
-        var splitStrArr = key.split("[_-]");
-        for (var i = 0; i < splitStrArr.length; i++) {
-            splitStrArr[i] = splitStrArr[i].substring(0, 1).toUpperCase() + splitStrArr[i].substring(1);
-        }
-        var result = String.join("", splitStrArr);
-        result = result.substring(0, 1).toLowerCase() + result.substring(1);
-        return result;
-    }
-
-    private static <T> T newInstance(Type type) throws InstantiationException, IllegalAccessException {
-        var clazz = (Class) null;
-        if (type instanceof ParameterizedType) {
-            clazz = (Class) ((ParameterizedType) type).getRawType();
-        } else if (type instanceof Class) {
-            clazz = (Class) type;
-        }
-        if (clazz.isInterface()) {
-            return (T) newInterfaceImpl(clazz);
-        } else {
-            return (T) clazz.newInstance();
-        }
-    }
-
-    private static <T> T newInterfaceImpl(Class<T> clazz) {
-        if (clazz == List.class) {
-            return (T) new ArrayList();
-        } else if (clazz == Map.class) {
-            return (T) new HashMap();
-        } else {
-            throw new IllegalArgumentException("not support interface " + clazz);
-        }
-    }
-
-    private static <T> Field getField(Type type, String fieldName) throws NoSuchFieldException {
-        if (type instanceof ParameterizedType) {
-            var rawType = ((ParameterizedType) type).getRawType();
-            if (rawType instanceof Class) {
-                return ((Class) rawType).getDeclaredField(fieldName);
-            } else {
-                throw new IllegalArgumentException("typeReference is not a class or parameterizedType");
-            }
-        } else if (type instanceof Class) {
-            return ((Class) type).getDeclaredField(fieldName);
-        } else {
-            throw new IllegalArgumentException("typeReference is not a class or parameterizedType");
-        }
     }
 
     private static <T> T bindSimpleModel(Object value, Type type, String bindKey) {
@@ -232,5 +196,64 @@ public final class YamlUtil {
         } else {
             throw new IllegalArgumentException("key '" + bindKey + "' is not a illegal type");
         }
+    }
+
+    private static void bindProperties(Map<String, Object> map, Type type, Object model, String bindKey) throws NoSuchFieldException, InstantiationException, IllegalAccessException {
+        for (var key : map.keySet()) {
+            var fieldName = parseFieldName(key);
+            var field = (Field) null;
+            try {
+                field = getField(type, fieldName);
+            } catch (NoSuchFieldException e) {
+                continue;
+            }
+            field.setAccessible(true);
+            var fieldType = field.getGenericType();
+            field.set(model, bindModel(map.get(key), fieldType, bindKey + "." + key));
+        }
+    }
+
+    private static Class getClassFromType(Type type) {
+        var clazz = (Class) null;
+        if (type instanceof ParameterizedType) {
+            clazz = (Class) ((ParameterizedType) type).getRawType();
+        } else {
+            clazz = (Class) type;
+        }
+        return clazz;
+    }
+
+    private static String parseFieldName(String key) {
+        var splitStrArr = key.split("[_-]");
+        for (var i = 0; i < splitStrArr.length; i++) {
+            splitStrArr[i] = splitStrArr[i].substring(0, 1).toUpperCase() + splitStrArr[i].substring(1);
+        }
+        var result = String.join("", splitStrArr);
+        result = result.substring(0, 1).toLowerCase() + result.substring(1);
+        return result;
+    }
+
+    private static <T> T newInstance(Type type) throws InstantiationException, IllegalAccessException {
+        var clazz = getClassFromType(type);
+        if (clazz.isInterface()) {
+            return (T) newInterfaceImpl(clazz);
+        } else {
+            return (T) clazz.newInstance();
+        }
+    }
+
+    private static <T> T newInterfaceImpl(Class<T> clazz) {
+        if (clazz == List.class) {
+            return (T) new ArrayList();
+        } else if (clazz == Map.class) {
+            return (T) new HashMap();
+        } else {
+            throw new IllegalArgumentException("not support interface " + clazz);
+        }
+    }
+
+    private static <T> Field getField(Type type, String fieldName) throws NoSuchFieldException {
+        var clazz = getClassFromType(type);
+        return clazz.getDeclaredField(fieldName);
     }
 }

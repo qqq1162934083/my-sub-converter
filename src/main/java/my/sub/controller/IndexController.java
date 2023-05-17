@@ -1,6 +1,7 @@
 package my.sub.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiaoleilu.hutool.http.HttpRequest;
 import com.xiaoleilu.hutool.io.FileUtil;
 import com.xiaoleilu.hutool.json.JSONUtil;
@@ -19,6 +20,7 @@ import org.yaml.snakeyaml.Yaml;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,13 +61,12 @@ public class IndexController {
     }
 
     @RequestMapping("/rule")
-    public String rule() throws IOException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        var yaml = new Yaml();
+    public Object rule() throws IOException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         var config = getSubInfoConfig();
         var subList = YamlUtil.getList(config, "sub-list");
         var subInfoList = YamlUtil.parse(subList, new TypeReference<List<SubInfo>>() {
         });
-        return JSONUtil.toJsonPrettyStr(subInfoList);
+        return subInfoList;
     }
 
     @RequestMapping("/global")
