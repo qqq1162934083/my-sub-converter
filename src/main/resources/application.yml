@@ -1,10 +1,6 @@
 server:
   port: 12312
-config:
-  url: https://rsslinghun1.xyz/api/v1/client/subscribe?token=4a30f91d82ecefb2070f8a48c73679c0
-  type: clash
-  header-names:
-    - Subscription-Userinfo
-    - Profile-Web-Page-Url
-    - Profile-Update-Interval
-  select-node-proxy-group-name: 灵魂云
+
+sub-config:
+  config-path: classpath:sub-info.yml
+  charset: UTF-8
