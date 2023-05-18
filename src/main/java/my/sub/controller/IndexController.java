@@ -18,28 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.yaml.snakeyaml.Yaml;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 
 @RestController
+@RequestMapping("/sub")
 public class IndexController {
 
     @Resource
     private SubConfig subConfig;
-
-    @Resource
-    private ResourceLoader resourceLoader;
-
-    private Object getSubInfoConfig() throws IOException {
-        var cfgRes = resourceLoader.getResource(subConfig.getConfigPath());
-        return new Yaml().load(FileUtil.readString(cfgRes.getFile(), subConfig.getCharset()));
-    }
 
     private RequestSubServerInfoResult requestSubServerInfo(RequestSubServerInput input) {
         //执行请求
@@ -60,17 +55,18 @@ public class IndexController {
         return new RequestSubServerInfoResult(body, deliveryHeaders);
     }
 
-    @RequestMapping("/rule")
-    public Object rule() throws IOException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        var config = getSubInfoConfig();
-        var subList = YamlUtil.getList(config, "sub-list");
-        var subInfoList = YamlUtil.parse(subList, new TypeReference<List<SubInfo>>() {
-        });
-        return subInfoList;
+    @RequestMapping("/**")
+    public Object sub(HttpServletRequest request) throws IOException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        var url = request.getRequestURL();
+        var subUrl = url.substring(url.indexOf("/sub/") + 5);
+        var subMap = subConfig.getConfigMap();
+        var configList = YamlUtil.getMapList(subMap, "config-list");
+        var config = configList.stream().filter(x -> x.containsKey("name") && Objects.equals(x.get("name"), subUrl)).findFirst().orElseThrow(() -> new RuntimeException("未找到配置"));
+        return getConfig(config);
     }
 
-    @RequestMapping("/global")
-    public String global() {
-        return "123";
+    private Object getConfig(Map<String, Object> config) {
+        System.out.println();
+        return null;
     }
 }

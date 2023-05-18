@@ -2,5 +2,5 @@ server:
   port: 12312
 
 sub-config:
-  config-path: classpath:sub-info.yml
+  config-path: ""
   charset: UTF-8

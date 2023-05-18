@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import lombok.SneakyThrows;
 import lombok.var;
+import org.yaml.snakeyaml.Yaml;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,15 @@ public final class YamlUtil {
      * @return
      */
     public static List<Object> getList(Object map, String key) {
-        return (List<Object>) ((Map<String, Object>) map).get(key);
+        return (List<Object>) getObject(map, key);
+    }
+
+    public static Object getObject(Object map, String key) {
+        return ((Map<String, Object>) map).get(key);
+    }
+
+    public static List<Map<String, Object>> getMapList(Object map, String key) {
+        return (List<Map<String, Object>>) getObject(map, key);
     }
 
 
@@ -255,5 +265,10 @@ public final class YamlUtil {
     private static <T> Field getField(Type type, String fieldName) throws NoSuchFieldException {
         var clazz = getClassFromType(type);
         return clazz.getDeclaredField(fieldName);
+    }
+
+
+    public static Map<String, Object> read(String content) {
+        return new Yaml().load(content);
     }
 }
