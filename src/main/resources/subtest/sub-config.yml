@@ -1,13 +1,17 @@
 #声明可以通过url订阅的配置
 config-list:
   - name: tcl
-    include:
-      - "C:\Users\116\Desktop\subtest/rules/bilibili-proxy-rule.yml"
-      - "C:\Users\116\Desktop\subtest/providers.yml"
+    include-config-list:
+      - "/rules/bilibili-proxy-rule.yml"
+      - "/providers.yml"
+    include-sub-list:
+      - linghun
+      - aws
   - name: home
   - name: global
 sub-list:
   - name: linghun
+    type: sub
     main-proxy-group-name: 灵魂云
     default-proxy-name: MY_PROXY
     request-headers:
@@ -27,4 +31,7 @@ sub-list:
       - Profile-Web-Page-Url
       - Profile-Update-Interval
     sub-url: https://rsslinghun1.xyz/api/v1/client/subscribe?token=4a30f91d82ecefb2070f8a48c73679c0
-  -
+  - name: aws
+    type: file
+    include:
+      - "proxies/aws.txt"
