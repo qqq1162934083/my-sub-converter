@@ -1,0 +1,29 @@
+rules:
+  #bilibili
+  - DOMAIN-SUFFIX,bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,biliapi.net,MY_PROXY
+  - DOMAIN-SUFFIX,akamaized.net,MY_PROXY
+  - DOMAIN-SUFFIX,bilivideo.com,MY_PROXY
+  - DOMAIN-SUFFIX,www.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,s1.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,static.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net,MY_PROXY
+  - DOMAIN-SUFFIX,data.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,i0.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,api.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,api.live.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,i2.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,i1.hdslb.com,MY_PROXY
+  - DOMAIN-SUFFIX,cm.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,api.geetest.com,MY_PROXY
+  - DOMAIN-SUFFIX,static.geetest.com,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bigfun.cn,MY_PROXY
+  - DOMAIN-SUFFIX,passport.biligame.com,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bilicomic.com,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bigfunapp.cn,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bilibili.cn,MY_PROXY
+  - DOMAIN-SUFFIX,passport.bilicomics.com,MY_PROXY
+  - DOMAIN-SUFFIX,api.vc.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,message.bilibili.com,MY_PROXY
+  - DOMAIN-SUFFIX,backup.hdslb.com,MY_PROXY
