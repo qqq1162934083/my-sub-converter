@@ -9,6 +9,7 @@ config-list:
       - aws
   - name: home
   - name: global
+sub-converter-url: 'http://localhost:25050'
 sub-list:
   - name: linghun
     type: sub
