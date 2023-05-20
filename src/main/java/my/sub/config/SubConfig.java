@@ -2,21 +2,16 @@ package my.sub.config;
 
 import com.xiaoleilu.hutool.io.FileUtil;
 import lombok.Data;
-import lombok.var;
+import my.sub.model.sub.UserConfig;
 import my.sub.util.YamlUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.Resource;
 import javax.validation.constraints.NotEmpty;
-import java.beans.Transient;
 import java.io.File;
-import java.util.Map;
 
 @Validated
 @Data
@@ -33,7 +28,11 @@ public class SubConfig implements ApplicationRunner {
 
     private String content;
 
-    private Map<String,Object> configMap;
+    private String workDir;
+
+    public UserConfig getUserConfig() {
+        return YamlUtil.deserialize(content, UserConfig.class);
+    }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -43,6 +42,9 @@ public class SubConfig implements ApplicationRunner {
         }
 
         content = FileUtil.readString(file, charset);
-        configMap = YamlUtil.read(content);
+        getUserConfig();
+
+        //工作目录
+        workDir = file.getParentFile().getAbsolutePath();
     }
 }

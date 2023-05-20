@@ -1,6 +1,7 @@
 #声明可以通过url订阅的配置
-config-list:
+config-info-list:
   - name: tcl
+    cli-type: clash
     include-config-list:
       - "/rules/bilibili-proxy-rule.yml"
       - "/providers.yml"
@@ -8,31 +9,34 @@ config-list:
       - linghun
       - aws
   - name: home
+    cli-type: clash
   - name: global
-sub-converter-url: 'http://localhost:25050'
-sub-list:
+    cli-type: clash
+sub-converter-url: 'http://localhost:25500'
+sub-info-list:
   - name: linghun
-    type: sub
+    sub-type: url
     main-proxy-group-name: 灵魂云
     default-proxy-name: MY_PROXY
-    request-headers:
-      User-Agent: clash
-    delivery-headers:
+#    request-headers:
+#      User-Agent: clash
+    delivery-header-list:
       - Subscription-Userinfo
       - Profile-Web-Page-Url
       - Profile-Update-Interval
     sub-url: https://rsslinghun1.xyz/api/v1/client/subscribe?token=4a30f91d82ecefb2070f8a48c73679c0
   - name: linghun2
+    sub-type: url
     main-proxy-group-name: 灵魂云
     default-proxy-name: MY_PROXY
-    request-headers:
-      User-Agent: clash
+#    request-headers:
+#      User-Agent: clash
     delivery-headers:
       - Subscription-Userinfo
       - Profile-Web-Page-Url
       - Profile-Update-Interval
     sub-url: https://rsslinghun1.xyz/api/v1/client/subscribe?token=4a30f91d82ecefb2070f8a48c73679c0
   - name: aws
-    type: file
-    include:
+    sub-type: file
+    include-file-list:
       - "proxies/aws.txt"

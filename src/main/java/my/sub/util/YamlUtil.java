@@ -20,6 +20,16 @@ import java.util.Map;
 
 public final class YamlUtil {
     /**
+     * 反序列化
+     * @param yaml
+     * @param clazz
+     * @return
+     * @param <T>
+     */
+    public static <T> T deserialize(String yaml, Class<T> clazz) {
+        return new Yaml().loadAs(yaml, clazz);
+    }
+    /**
      * 从yaml的map中获取list
      *
      * @param map
