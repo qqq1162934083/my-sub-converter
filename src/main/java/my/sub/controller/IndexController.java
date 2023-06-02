@@ -19,10 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.net.URLEncoder;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 
 @RestController
 @RequestMapping("/sub")
@@ -51,12 +52,12 @@ public class IndexController {
     }
 
     @RequestMapping("/**")
-    public Object sub(HttpServletRequest request) throws IOException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public String sub(HttpServletRequest request) throws IOException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         var url = request.getRequestURL();
         var configName = url.substring(url.indexOf("/sub/") + 5);
         var userConfig = subConfig.getUserConfig();
         var configInfo = userConfig.getConfigInfoList().stream().filter(x -> x.getName().equals(configName)).findFirst().orElseThrow(() -> new RuntimeException("未找到配置"));
-        return getConfig(userConfig, configInfo);
+        return YamlUtil.serialize(getConfig(userConfig, configInfo));
     }
 
     private Object getConfig(UserConfig userConfig, ConfigInfo configInfo) throws IOException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -66,6 +67,7 @@ public class IndexController {
         var subConverterUrl = userConfig.getSubConverterUrl();
         var subInfoNameList = configInfo.getIncludeSubList();
         var subInfoList = userConfig.getSubInfoList().stream().filter(x -> subInfoNameList.contains(x.getName())).collect(Collectors.toList());
+        var configFileList = configInfo.getIncludeConfigList();
 
         //获取代理列表
         var proxyList = new ArrayList<>();
@@ -73,8 +75,26 @@ public class IndexController {
             proxyList.addAll(getProxyList(subInfo, workDir, subConverterUrl, cliType, charset));
         }
         //获取配置
+        var config = mergeConfigList(configFileList, workDir, cliType, charset);
+
 
         return proxyList;
+    }
+
+    private void mergeConfigList(List<String> configFileList, String workDir, String cliType, String charset) {
+        switch (cliType){
+            case "clash":
+                mergeConfigListForClash(configFileList, workDir, cliType, charset);
+            default:
+                throw new RuntimeException("未知的cli类型");
+        }
+    }
+
+    private void mergeConfigListForClash(List<String> configFileList, String workDir, String cliType, String charset) {
+        for(var path: configFileList){
+            var content = FileUtil.readString(new File(workDir, path), charset);
+            YamlUtil.read(content);
+        }
     }
 
     private List getProxyList(SubInfo subInfo, String workDir, String converterUrl, String type, String charset) {
@@ -103,7 +123,9 @@ public class IndexController {
     }
 
     private List getProxyListByUrl(String url, String converterUrl, String cliType, String charset) {
-        var request = HttpRequest.get(converterUrl + "?type=" + cliType + "&url=" + url).charset(charset);
+        url = URLEncoder.encode(url);
+        url = converterUrl + "/sub?target=" + cliType + "&url=" + url;
+        var request = HttpRequest.get(url).charset(charset);
         var body = request.execute().body();
         return getProxyListByCliType(body, cliType);
     }
@@ -111,7 +133,9 @@ public class IndexController {
     private List getProxyListByCliType(String body, String cliType) {
         switch (cliType) {
             case "clash":
-                var clashConfig = YamlUtil.deserialize(body, ClashConfig.class);
+                var doc = (Map<String, Object>) YamlUtil.read(body);
+                doc.keySet().stream().filter(x -> !Objects.equals(x, "proxies")).collect(Collectors.toList()).forEach(doc::remove);
+                var clashConfig = YamlUtil.deserialize(YamlUtil.serialize(doc), ClashConfig.class);
                 return clashConfig.getProxies();
             default:
                 throw new RuntimeException("未知的cli类型");

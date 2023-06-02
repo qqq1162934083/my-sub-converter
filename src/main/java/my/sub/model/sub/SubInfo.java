@@ -10,7 +10,7 @@ public class SubInfo {
     private SubType subType;
     private String mainProxyGroupName;
     private String defaultProxyName;
-    private String deliveryHeaderList;
+    private List<String> deliveryHeaderList;
     private String subUrl;
     private List<String> includeFileList;
 }

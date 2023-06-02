@@ -5,7 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import lombok.SneakyThrows;
 import lombok.var;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.composer.Composer;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.introspector.Property;
+import org.yaml.snakeyaml.introspector.PropertyUtils;
+import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -19,16 +26,62 @@ import java.util.List;
 import java.util.Map;
 
 public final class YamlUtil {
+    private enum YamlSingleton{
+        INSTANCE;
+        private Yaml _instance;
+        private YamlSingleton(){
+            _instance = createYamlInstance();
+        }
+    }
+    public static Yaml getYaml(){
+        return YamlSingleton.INSTANCE._instance;
+    }
+    public static Yaml createYamlInstance() {
+        var loadOption = new LoaderOptions();
+        loadOption.setEnumCaseSensitive(false);
+        var ctor = new Constructor(loadOption);
+        var propUtilsImpl = new PropertyUtils() {
+
+            @Override
+            public Property getProperty(Class<?> type, String name) {
+                var fieldName = camelize(name);
+                return super.getProperty(type, fieldName);
+            }
+
+            private String camelize(String input) {
+                for (int i = 0; i < input.length(); i++) {
+                    if (input.substring(i, i + 1).equals("-")) {
+                        input.replace("-", "");
+                        input = input.substring(0, i) + input.substring(i + 1, i + 2).toUpperCase() + input.substring(i + 2);
+                    }
+                    if (input.substring(i, i + 1).equals(" ")) {
+                        input.replace(" ", "");
+                        input = input.substring(0, i) + input.substring(i + 1, i + 2).toUpperCase() + input.substring(i + 2);
+                    }
+                }
+                return input;
+            }
+        };
+        propUtilsImpl.setSkipMissingProperties(true);
+        ctor.setPropertyUtils(propUtilsImpl);
+        return new Yaml(ctor);
+    }
+
     /**
      * 反序列化
+     *
      * @param yaml
      * @param clazz
-     * @return
      * @param <T>
+     * @return
      */
     public static <T> T deserialize(String yaml, Class<T> clazz) {
-        return new Yaml().loadAs(yaml, clazz);
+        return YamlUtil.getYaml().loadAs(yaml, clazz);
     }
+    public static String serialize(Object obj){
+        return YamlUtil.getYaml().dump(obj);
+    }
+
     /**
      * 从yaml的map中获取list
      *
@@ -278,7 +331,7 @@ public final class YamlUtil {
     }
 
 
-    public static Map<String, Object> read(String content) {
-        return new Yaml().load(content);
+    public static <T> T read(String content) {
+        return getYaml().load(content);
     }
 }

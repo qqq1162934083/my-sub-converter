@@ -2,6 +2,7 @@ package my.sub.config;
 
 import com.xiaoleilu.hutool.io.FileUtil;
 import lombok.Data;
+import my.sub.model.sub.SubType;
 import my.sub.model.sub.UserConfig;
 import my.sub.util.YamlUtil;
 import org.springframework.boot.ApplicationArguments;
