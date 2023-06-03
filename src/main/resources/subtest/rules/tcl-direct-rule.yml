@@ -1,0 +1,4 @@
+rules:
+  #tcl
+  - DOMAIN-SUFFIX,tcl.com,DIRECT
+  - DOMAIN-SUFFIX,tclking.com,DIRECT

@@ -3,13 +3,32 @@ config-info-list:
   - name: tcl
     cli-type: clash
     include-config-list:
+
       - "/rules/bilibili-proxy-rule.yml"
+      - "/rules/tcl-direct-rule.yml"
+      - "/rules/main-rule.yml"
+
+      - "/core.yml"
+      - "/proxy-groups.yml"
+      - "/proxies.yml"
+      - "/providers.yml"
+    include-sub-list:
+      - linghun
+      - linghun2
+      - aws
+  - name: home
+    cli-type: clash
+    include-config-list:
+
+      - "/rules/main-rule.yml"
+
+      - "/core.yml"
+      - "/proxy-groups.yml"
+      - "/proxies.yml"
       - "/providers.yml"
     include-sub-list:
       - linghun
       - aws
-  - name: home
-    cli-type: clash
   - name: global
     cli-type: clash
 sub-converter-url: 'http://localhost:25500'
@@ -20,11 +39,11 @@ sub-info-list:
     default-proxy-name: MY_PROXY
 #    request-headers:
 #      User-Agent: clash
-    delivery-header-list:
+    delivery-headers:
       - Subscription-Userinfo
       - Profile-Web-Page-Url
       - Profile-Update-Interval
-    sub-url: https://rsslinghun1.xyz/api/v1/client/subscribe?token=4a30f91d82ecefb2070f8a48c73679c0
+    sub-url: https://rsslinghun1.xyz/api/v1/client/subscribe?token=927df053a3edd113bb0329236bb35ae3
   - name: linghun2
     sub-type: url
     main-proxy-group-name: 灵魂云
@@ -35,7 +54,7 @@ sub-info-list:
       - Subscription-Userinfo
       - Profile-Web-Page-Url
       - Profile-Update-Interval
-    sub-url: https://rsslinghun1.xyz/api/v1/client/subscribe?token=4a30f91d82ecefb2070f8a48c73679c0
+    sub-url: https://rsslinghun1.xyz/api/v1/client/subscribe?token=927df053a3edd113bb0329236bb35ae3
   - name: aws
     sub-type: file
     include-file-list:

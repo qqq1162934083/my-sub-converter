@@ -1,0 +1,7 @@
+proxies:
+  # aws
+  - { name: aws, server: 13.35.69.104, port: 443, type: vmess, uuid: a9a6cd6d-dbdb-4b6b-8f0e-d3d81766c170, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, network: ws, ws-opts: { path: /a9a6cd6d-dbdb-4b6b-8f0e-d3d81766c170, headers: { Host: d1senemq0jpzlo.cloudfront.net } }, udp: true }
+  # 45.134.93.165
+  - { name: ISP1, type: socks5, server: 45.134.93.165, port: 58169, username: 8Z1iLjM1j8l49IO, password: 7zJ14Hco23Fcvcj, udp: true }
+  # 45.134.93.165
+  - { name: ISP2, type: socks5, server: 45.134.93.165, port: 58169, username: 8Z1iLjM1j8l49IO, password: 7zJ14Hco23Fcvcj, udp: true }

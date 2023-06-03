@@ -1,0 +1,71 @@
+rules:
+  #maven repo
+  - DOMAIN-SUFFIX,maven.org,MY_PROXY
+
+  #private custom
+  - DOMAIN-SUFFIX,local.cn,DIRECT
+
+  #csdn.net
+  - DOMAIN-SUFFIX,csdn.net,MY_PROXY
+
+  #cloudflare
+  - DOMAIN-SUFFIX,cloudflare.com,MY_PROXY
+
+  #aws
+  - DOMAIN-SUFFIX,awstrack.me,MY_PROXY
+  - DOMAIN-SUFFIX,amazon.com,MY_PROXY
+  - DOMAIN-SUFFIX,awscloud.com,MY_PROXY
+
+  #tandem
+  - DOMAIN-SUFFIX,tandem.net,MY_PROXY
+
+  #microsoft
+  - DOMAIN-SUFFIX,microsoft.com,MY_PROXY
+  - DOMAIN-SUFFIX,microsoftonline.com,MY_PROXY
+
+  #ipinfo.io query ip
+  #- DOMAIN-SUFFIX,ipinfo.io,MY_PROXY
+
+  #must advertising services
+  #google ad services
+  - DOMAIN-SUFFIX,googleadservices.com,MY_PROXY
+  - DOMAIN-SUFFIX,ad.doubleclick.net,MY_PROXY
+  - DOMAIN-SUFFIX,pixel.everesttech.net,MY_PROXY
+
+  #shandian
+  - DOMAIN-SUFFIX,shandianpro.com,MY_PROXY
+
+  #bing
+  - DOMAIN-SUFFIX,bing.com,MY_PROXY
+
+  #oracle
+  - DOMAIN-SUFFIX,oracle.com,MY_PROXY
+
+  #postman
+  - DOMAIN-SUFFIX,postman.com,MY_PROXY
+  - DOMAIN-SUFFIX,getpostman.com,MY_PROXY
+
+  #leetcode
+  - DOMAIN-SUFFIX,leetcode.com,MY_PROXY
+  - DOMAIN-SUFFIX,leetcode.cn,MY_PROXY
+
+  #chatgpt
+  - DOMAIN-SUFFIX,chat.openai.com,MY_PROXY
+  - DOMAIN-SUFFIX,openai.com,MY_PROXY
+
+  #tiktok
+  - DOMAIN-SUFFIX,tiktokv.com,MY_PROXY
+  - DOMAIN-SUFFIX,tiktokcdn.com,MY_PROXY
+  - DOMAIN-SUFFIX,tiktokcdn-us.com,MY_PROXY
+
+  #直连优先
+  - RULE-SET,applications,DIRECT
+  - DOMAIN,clash.razord.top,DIRECT
+  - DOMAIN,yacd.haishan.me,DIRECT
+  - RULE-SET,private,DIRECT
+  - RULE-SET,reject,REJECT
+  - RULE-SET,tld-not-cn,MY_PROXY
+  - RULE-SET,gfw,MY_PROXY
+  - RULE-SET,greatfire,MY_PROXY
+  - RULE-SET,telegramcidr,MY_PROXY
+  - MATCH,DIRECT

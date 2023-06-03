@@ -26,16 +26,19 @@ import java.util.List;
 import java.util.Map;
 
 public final class YamlUtil {
-    private enum YamlSingleton{
+    private enum YamlSingleton {
         INSTANCE;
         private Yaml _instance;
-        private YamlSingleton(){
+
+        private YamlSingleton() {
             _instance = createYamlInstance();
         }
     }
-    public static Yaml getYaml(){
+
+    public static Yaml getYaml() {
         return YamlSingleton.INSTANCE._instance;
     }
+
     public static Yaml createYamlInstance() {
         var loadOption = new LoaderOptions();
         loadOption.setEnumCaseSensitive(false);
@@ -78,7 +81,8 @@ public final class YamlUtil {
     public static <T> T deserialize(String yaml, Class<T> clazz) {
         return YamlUtil.getYaml().loadAs(yaml, clazz);
     }
-    public static String serialize(Object obj){
+
+    public static String serialize(Object obj) {
         return YamlUtil.getYaml().dump(obj);
     }
 

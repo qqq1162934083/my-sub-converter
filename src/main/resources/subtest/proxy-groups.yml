@@ -1,0 +1,19 @@
+proxy-groups:
+  - name: MY_PROXY
+    type: select
+    proxies:
+      - MAIN_SELECT
+      - RELAY_TO_ISP
+      - ISP_SELECT
+
+  - name: ISP_SELECT
+    type: select
+    proxies:
+      - ISP1
+      - ISP2
+
+  - name: RELAY_TO_ISP
+    type: relay
+    proxies:
+      - MAIN_SELECT
+      - ISP_SELECT
