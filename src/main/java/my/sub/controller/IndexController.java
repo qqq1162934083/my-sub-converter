@@ -77,7 +77,7 @@ public class IndexController {
             var configInfo = userConfig.getConfigInfoList().stream().filter(x -> x.getName().equals(configName)).findFirst().orElseThrow(() -> new RuntimeException("未找到配置"));
             return getConfig(userConfig, configInfo);
         } catch (BizException exp) {
-            return exp.getMessage();
+            return "catch exp: " + exp.getMessage();
         }
     }
 
@@ -101,7 +101,9 @@ public class IndexController {
         var charset = userConfig.getCharset();
         var subConverterUrl = userConfig.getSubConverterUrl();
         var subInfoNameList = configInfo.getIncludeSubList();
-        var subInfoList = userConfig.getSubInfoList().stream().filter(x -> subInfoNameList.contains(x.getName())).collect(Collectors.toList());
+        if (subInfoNameList == null) subInfoNameList = new ArrayList<>();
+        List<String> finalSubInfoNameList = subInfoNameList;
+        var subInfoList = userConfig.getSubInfoList().stream().filter(x -> finalSubInfoNameList.contains(x.getName())).collect(Collectors.toList());
         var configFileList = configInfo.getIncludeConfigList();
 
         //获取代理列表
@@ -194,7 +196,12 @@ public class IndexController {
         url = URLEncoder.encode(url);
         url = converterUrl + "/sub?target=" + cliType + "&url=" + url;
         var request = HttpRequest.get(url).charset(charset);
-        var body = request.execute().body();
+        var body = (String) null;
+        try {
+            body = request.execute().body();
+        } catch (Exception exp) {
+            throw new BizException(String.format("依赖的服务项没有启动", subInfo.getSubUrl(), converterUrl, exp.getMessage()));
+        }
         return getProxyListByCliType(subInfo, body, cliType);
     }
 

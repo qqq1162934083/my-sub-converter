@@ -2,6 +2,7 @@ package my.sub.config;
 
 import com.xiaoleilu.hutool.io.FileUtil;
 import lombok.Data;
+import lombok.var;
 import my.sub.model.sub.SubType;
 import my.sub.model.sub.UserConfig;
 import my.sub.util.YamlUtil;
@@ -13,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.File;
+import java.util.stream.Collectors;
 
 @Validated
 @Data
@@ -43,7 +45,9 @@ public class SubConfig implements ApplicationRunner {
         }
 
         content = FileUtil.readString(file, charset);
-        getUserConfig();
+        var config = getUserConfig();
+        var names = config.getConfigInfoList().stream().map(x -> x.getName()).collect(Collectors.toList());
+        System.out.println("可用配置：" + String.join(",", names));
 
         //工作目录
         workDir = file.getParentFile().getAbsolutePath();
